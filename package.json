@@ -1,0 +1,32 @@
+{
+  "name": "rabbitmq-express",
+  "version": "1.0.0",
+  "description": "This is a sample Node.js project using express and RabbitMQ to test RPC connection.",
+  "main": "app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amin4193/rabbitmq-express.git"
+  },
+  "keywords": [
+    "rabbitmq",
+    "express",
+    "typescript"
+  ],
+  "author": "AAH",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amin4193/rabbitmq-express/issues"
+  },
+  "homepage": "https://github.com/amin4193/rabbitmq-express#readme",
+  "dependencies": {
+    "amqplib": "^0.8.0",
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.8.2",
+    "@types/express": "^4.17.13"
+  }
+}
