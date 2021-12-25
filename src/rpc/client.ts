@@ -1,5 +1,5 @@
 import amqp   from 'amqplib'
-import config from './config'
+import config from '../config'
 
 function send(channel: amqp.Channel, message: amqp.ConsumeMessage | null) {
   channel.emit(message?.properties.correlationId, message?.content)

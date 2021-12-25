@@ -1,9 +1,9 @@
 import amqp   from 'amqplib'
-import config from './config'
+import config from '../config'
 
 // Factorial Function
 function factorial(n: number): number {
-  if(n <= 1) return 1
+  if(!n || n <= 1) return 1
   return n * factorial(n - 1)
 }
 
@@ -14,12 +14,13 @@ function factorial(n: number): number {
 
   channel.assertQueue(config.queue, { durable: false })
   channel.prefetch(1)
-  console.log(" [x] Awaiting RPC Requests")
+  console.log('<<<< RPC Server is Running >>>>')
+  console.log(' [x] Awaiting RPC Requests')
 
   channel.consume(config.queue, (msg: amqp.ConsumeMessage | null) => {
 
     const number: number = parseInt(msg?.content.toString() as string)
-    console.log(" [.] fac(%d)", number)
+    console.log(' [.] fac(%d)', number)
 
     // start
     const tStart: number = Date.now()

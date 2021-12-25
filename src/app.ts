@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express'
-import http    from 'http'
-import logger  from './logger'
-import config  from './config'
-import client  from './rpc_client'
+import http   from 'http'
+import logger from './services/logger'
+import config from './config'
+import client from './rpc/client'
 
 const { baseUrl, queue, host, port } = config
 

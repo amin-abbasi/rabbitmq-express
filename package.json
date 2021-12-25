@@ -2,8 +2,9 @@
   "name": "rabbitmq-express",
   "version": "1.0.0",
   "description": "This is a sample Node.js project using express and RabbitMQ to test RPC connection.",
-  "main": "app.ts",
+  "main": "./src/app.ts",
   "scripts": {
+    "rpc": "ts-node ./src/rpc/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
