@@ -4,7 +4,7 @@ import logger from './services/logger'
 import config from './config'
 import client from './rpc/client'
 
-const { baseUrl, queue, host, port } = config
+const { rabbitUrl, queue, host, port } = config
 
 const app = express()
 
@@ -13,7 +13,7 @@ app.use(logger)
 app.get('/factorial/:number', async function(req: Request, res: Response): Promise<void> {
   try {
     const number: string = req.params.number
-    const channel = await client.createClient(baseUrl)
+    const channel = await client.createClient(rabbitUrl)
     const message = await client.sendRPCMessage(channel, number, queue)
     const result = JSON.parse(message.toString())
     res.json(result)

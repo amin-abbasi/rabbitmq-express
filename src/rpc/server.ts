@@ -1,6 +1,8 @@
 import amqp   from 'amqplib'
 import config from '../config'
 
+const { rabbitUrl, queue } = config
+
 // Factorial Function
 function factorial(n: number): number {
   if(!n || n <= 1) return 1
@@ -9,15 +11,15 @@ function factorial(n: number): number {
 
 // Initiate AMQP Channel
 (async () => {
-  const connection: amqp.Connection = await amqp.connect(config.baseUrl)
+  const connection: amqp.Connection = await amqp.connect(rabbitUrl)
   const channel: amqp.Channel = await connection.createChannel()
 
-  channel.assertQueue(config.queue, { durable: false })
+  channel.assertQueue(queue, { durable: false })
   channel.prefetch(1)
   console.log('<<<< RPC Server is Running >>>>')
   console.log(' [x] Awaiting RPC Requests')
 
-  channel.consume(config.queue, (msg: amqp.ConsumeMessage | null) => {
+  channel.consume(queue, (msg: amqp.ConsumeMessage | null) => {
 
     const number: number = parseInt(msg?.content.toString() as string)
     console.log(' [.] fac(%d)', number)

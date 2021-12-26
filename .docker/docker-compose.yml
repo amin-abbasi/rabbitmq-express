@@ -1,0 +1,60 @@
+version: "3.2"
+
+services:
+
+  my-rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'my-rabbitmq'
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "amin"
+      RABBITMQ_DEFAULT_PASS: "1234"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "6672:5672"
+      - "16672:15672"
+    volumes:
+      - my-rabbitmq-volume:/var/lib/rabbitmq/
+      - my-rabbitmq-volume:/var/log/rabbitmq
+    networks:
+      - my_network
+
+  my-express-app:
+    build:
+      context: ../
+      dockerfile: ./.docker/express.dockerfile
+    container_name: my-express-app
+    # working_dir: /usr/src
+    ports:
+      - "5000:5000"
+    image: my-express-app
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    networks:
+      - my_network
+
+  my-rpc-app:
+    build:
+      context: ../
+      dockerfile: ./.docker/rpc.dockerfile
+    container_name: my-rpc-app
+    # working_dir: /usr/src
+    image: my-rpc-app
+    depends_on:
+      - my-rabbitmq
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    networks:
+      - my_network
+
+
+networks:
+  my_network:
+    driver: bridge
+    # external:
+    #   name: my_network
+
+volumes:
+  my-rabbitmq-volume:
