@@ -14,14 +14,14 @@ function factorial(n: number): number {
   const connection: amqp.Connection = await amqp.connect(rabbitUrl)
   const channel: amqp.Channel = await connection.createChannel()
 
-  channel.assertQueue(queue, { durable: false })
+  channel.assertQueue(queue, { durable: false /**, autoDelete: true */ })
   channel.prefetch(1)
   console.log('<<<< RPC Server is Running >>>>')
   console.log(' [x] Awaiting RPC Requests')
 
   channel.consume(queue, (msg: amqp.ConsumeMessage | null) => {
 
-    const number: number = parseInt(msg?.content.toString() as string)
+    const number: number = parseInt(msg?.content.toString('utf8')) || 1
     console.log(' [.] fac(%d)', number)
 
     // start
