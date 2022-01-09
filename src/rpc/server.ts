@@ -21,7 +21,7 @@ function factorial(n: number): number {
 
   channel.consume(queue, (msg: amqp.ConsumeMessage | null) => {
 
-    const number: number = parseInt(msg?.content.toString('utf8')) || 1
+    const number: number = parseInt(msg?.content.toString('utf8') as string) || 1
     console.log(' [.] fac(%d)', number)
 
     // start
